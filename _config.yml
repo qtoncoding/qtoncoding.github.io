@@ -9,11 +9,11 @@ highlighter: pygments
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : GabrielGhe
-tagline: My mind palace
+title : QT On Coding
+tagline: My coding adventures
 author : 
-  name : Gabriel G
-  github : GabrielGhe
+  name : Thai Nguyen
+  github : qtoncoding
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -23,7 +23,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://GabrielGhe.github.io
+production_url : http://qtoncoding.github.io
 paginate: 15
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
