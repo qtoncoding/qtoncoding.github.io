@@ -19,7 +19,7 @@ Variadic Template is a feature in C++11 that allows programmer to make template 
 A variadic template class looks like this
 
 <!-- Code -->
-{% highlight csharp linenos %}
+{% highlight cplusplus linenos %}
 template <typename T ... >
 class MultiTemplate 
 {
