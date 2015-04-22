@@ -48,7 +48,6 @@ public:
 Copy constructor uses initializer list to initilize ```rawPointer``` to ```other.rawPointer``` and ```refCount``` to ```other.refCount```. However, we also need to increment the reference counter.
 
 {% highlight c++ %}
-
         // Copy Constructor
     SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
     {
@@ -59,7 +58,6 @@ Copy constructor uses initializer list to initilize ```rawPointer``` to ```other
 The move constructor is something new to people who are not familier to C++11. What it does is it steals the content of the other pointer without copying data over, leaving the other pointer with garbage or null. We accomplish this by initializing our fields to ```nullptr``` and use ```std::swap``` to swap the data around.
 
 {% highlight c++ %}
-
         // Move Constructor
     SmartPointer<T>(SmartPointer<T> && other)
     {
@@ -79,7 +77,6 @@ SmartPointer<Cat> catPtr = new Cat();
 We do this by initializing the ```rawPointer``` with the ```object``` pointer, and initialize ```refCount``` with a dynamically allocated ```int```.
 
 {% highlight c++ %}
-
         // Constructor from object pointer (for calling new)
     SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
 {% endhighlight %}
@@ -87,7 +84,6 @@ We do this by initializing the ```rawPointer``` with the ```object``` pointer, a
 Next up, we define the assignment operators for another SmartPointer or a raw object pointer. To do this, we first decrement the reference counter, clean up the object if reference hits 0. After that assign ```rawPointer``` the object pointer, ```refCount``` to ```other.refCount``` or 1 if assigning to an object pointer and increment ```refCount```.
 
 {% highlight c++ %}
-
         // Assignment operator for SmartPointer
     SmartPointer<T> & operator= (SmartPointer<T> const & other) 
     {
@@ -133,7 +129,6 @@ Next up, we define the assignment operators for another SmartPointer or a raw ob
 Finally, we write the destructor. In the destructor we decrement reference counter, clean up the object and the reference counter if reference count is 0.
 
 {% highlight c++ %}
-
         // Destructor
     ~SmartPointer<T>() 
     {
@@ -153,7 +148,6 @@ Finally, we write the destructor. In the destructor we decrement reference count
 
 So far so good. But a pointer that cannot be dereferenced isn't that useful. So let's write the dereference operators. These operators return a reference to the object we point to.
 {% highlight c++ %}
-
         // Dereference operators
     T& operator->() 
     {
