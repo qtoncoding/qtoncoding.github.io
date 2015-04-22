@@ -71,7 +71,7 @@ The move constructor is something new to people who are not familier to C++11. W
 The next constructor is to create our pointer from a raw pointer, to use with syntax such as 
 
 {% highlight c++ %}
-SmartPointer<Cat> catPtr = new Cat();
+SmartPointer<Cat> catPtr(new Cat());
 {% endhighlight %}
 
 We do this by initializing the ```rawPointer``` with the ```object``` pointer, and initialize ```refCount``` with a dynamically allocated ```int```.
