@@ -11,10 +11,10 @@ tags: [C++, modern C++, pointer, smart]
 
 Pointers are hard to use and think about. There are many hazards that come with them such as dangling pointers and memory leaking. A solution to these issues is to use a smart pointer. A smart pointer usually is a wrapper around a raw pointer, with a reference count to keep track of the object, automatically cleaning up when the object is no longer referred to and avoid memory leaks.
 
-<!-- Example -->
+
 <h3>Example</h3>
 We start out with a template declaration
-<!-- Code -->
+
 
 {% highlight c++ %}
     template <typename T>
@@ -23,7 +23,7 @@ We start out with a template declaration
     };
 {% endhighlight %}
 
-<!-- END Code -->
+
  A template will make this pointer usable with any type of object we want.
  
  A smart pointer contains a raw pointer to the object it points to, as well as a reference counter.
@@ -43,13 +43,17 @@ For default constructor, we use initializer list to initialize the raw pointer a
     SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
 {% endhighlight %}
 
+Copy constructor uses initializer list to initilize ```rawPointer``` to ```other.rawPointer``` and ```refCount``` to ```other.refCount```. However, we also need to increment the reference counter.
+
 {% highlight c++ %}
     // Copy Constructor
     SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
     {
         ++(*refCount);
     }
+{% endhighlight %}
 
+{% highlight c++ %}
     // Move Constructor
     SmartPointer<T>(SmartPointer<T> && other)
     {
