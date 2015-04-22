@@ -49,7 +49,7 @@ Copy constructor uses initializer list to initilize ```rawPointer``` to ```other
 
 {% highlight c++ %}
 
-    // Copy Constructor
+        // Copy Constructor
     SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
     {
         ++(*refCount);
@@ -60,7 +60,7 @@ The move constructor is something new to people who are not familier to C++11. W
 
 {% highlight c++ %}
 
-    // Move Constructor
+        // Move Constructor
     SmartPointer<T>(SmartPointer<T> && other)
     {
         rawPointer = nullptr;
@@ -80,7 +80,7 @@ We do this by initializing the ```rawPointer``` with the ```object``` pointer, a
 
 {% highlight c++ %}
 
-    // Constructor from object pointer (for calling new)
+        // Constructor from object pointer (for calling new)
     SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
 {% endhighlight %}
 
@@ -88,7 +88,7 @@ Next up, we define the assignment operators for another SmartPointer or a raw ob
 
 {% highlight c++ %}
 
-    // Assignment operator for SmartPointer
+        // Assignment operator for SmartPointer
     SmartPointer<T> & operator= (SmartPointer<T> const & other) 
     {
         // Decrement refCount on old value, clean up if needed
@@ -134,7 +134,7 @@ Finally, we write the destructor. In the destructor we decrement reference count
 
 {% highlight c++ %}
 
-    // Destructor
+        // Destructor
     ~SmartPointer<T>() 
     {
         if (refCount != nullptr)
@@ -154,7 +154,7 @@ Finally, we write the destructor. In the destructor we decrement reference count
 So far so good. But a pointer that cannot be dereferenced isn't that useful. So let's write the dereference operators. These operators return a reference to the object we point to.
 {% highlight c++ %}
 
-    // Dereference operators
+        // Dereference operators
     T& operator->() 
     {
         return *rawPointer;
