@@ -35,5 +35,83 @@ class SmartPointer
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
 {% highlight cplusplus linenos %}
- 
+// Default Constructor
+    SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
+    
+    // Copy Constructor
+    SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
+    {
+        ++(*refCount);
+    }
+
+    // Move Constructor
+    SmartPointer<T>(SmartPointer<T> && other)
+    {
+        rawPointer = nullptr;
+        refCount = nullptr;
+        std::swap(rawPointer, other.rawPointer);
+        std::swap(refCount, other.refCount);
+    }
+
+    // Constructor from object pointer (for calling new)
+    SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
+
+    // Assignment operator for SmartPointer
+    SmartPointer<T> & operator= (SmartPointer<T> const & other)
+    {
+        // Decrement refCount on old value, clean up if needed
+        if (refCount != nullptr)
+        {
+            --(*refCount);
+            if (*refCount == 0)
+            {
+                delete rawPointer;
+                rawPointer = nullptr;
+                delete refCount;
+                refCount = nullptr;
+            }
+        }
+
+        // Assign values
+        rawPointer = other.rawPointer;
+        refCount = other.refCount;
+        ++(*refCount);
+        return *this;
+    }
+
+    SmartPointer<T> & operator= (T* const object)
+    {
+        if (refCount != nullptr)
+        {
+            --(*refCount);
+            if (*refCount == 0)
+            {
+                delete rawPointer;
+                rawPointer = nullptr;
+                delete refCount;
+                refCount = nullptr;
+            }
+        }
+
+        rawPointer = object;
+        refCount = new int(1);
+
+        return *this;
+    }
+
+    // Destructor
+    ~SmartPointer<T>()
+    {
+        if (refCount != nullptr)
+        {
+            --(*refCount);
+            if (*refCount == 0)
+            {
+                delete rawPointer;
+                rawPointer = nullptr;
+                delete refCount;
+                refCount = nullptr;
+            }
+        }
+    } 
 {% endhighlight %}
