@@ -164,7 +164,7 @@ So far so good. But a pointer that cannot be dereferenced isn't that useful. So 
 
 Here is a simple program to test out the smart pointer
 
-{% highlight c++ %}
+{% highlight c++ linenos %}
 int main()
 {
     SmartPointer<int> p1;                     // Default constructor, rawPointer and refCount are nullptr
