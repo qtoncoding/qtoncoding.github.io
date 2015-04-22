@@ -17,7 +17,7 @@ Pointers are hard to use and think about. There are many hazards that come with 
 We start out with a template declaration
 <!-- Code -->
 {% highlight cplusplus linenos %}
-template <typename T ... >
+template <typename T>
 class SmartPointer
 {
 };
