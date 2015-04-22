@@ -11,6 +11,9 @@ tags: [C++, modern C++, pointer, smart]
 
 Pointers are hard to use and think about. There are many hazards that come with them such as dangling pointers and memory leaking. A solution to these issues is to use a smart pointer. A smart pointer usually is a wrapper around a raw pointer, with a reference count to keep track of the object, automatically cleaning up when the object is no longer referred to and avoid memory leaks.
 
+In the Standard Templated Library of C++ there are 2 kinds of smart pointers: ```unique_ptr``` and ```shared_ptr```. They should be used instead of raw pointer at most cases, unless your target device cannot afford the neligible overhead of these poitners.
+
+If you are interested in how a smart pointer is generally implemented, this post will show you how it's done.
 
 <h3>Example</h3>
 We start out with a template declaration
@@ -144,3 +147,21 @@ Finally, we write the destructor. In the destructor we decrement reference count
     }
 } 
 {% endhighlight %}
+
+So far so good. But a pointer that cannot be dereferenced isn't that useful. So let's write the dereference operators. These operators return a reference to the object we point to.
+{% highlight c++ %}
+// Dereference operators
+T& operator->()
+{
+    return *rawPointer;
+}
+
+T & operator*()
+{
+    return *rawPointer;
+}
+{% endhighlight %}
+
+There you go! Reference counting Smart Pointer isn't so hard now huh?
+
+Thai
