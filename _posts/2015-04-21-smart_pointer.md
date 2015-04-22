@@ -29,13 +29,12 @@ We start out with a template declaration
  A template will make this pointer usable with any type of object we want.
  
  A smart pointer contains a raw pointer to the object it points to, as well as a reference counter.
-```cpp
 
+{% highlight c++ %}
     private:
        T* rawPointer;
        int* refCount;
-
-```
+{% endhighligh %}
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
 ```cpp
