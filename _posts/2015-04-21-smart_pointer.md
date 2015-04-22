@@ -64,6 +64,7 @@ SmartPointer<T>(SmartPointer<T> && other)
     std::swap(rawPointer, other.rawPointer);
     std::swap(refCount, other.refCount);
 }
+{% endhighlight %}
 
 The next constructor is to create our pointer from a raw pointer, to use with syntax such as 
 
