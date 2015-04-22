@@ -17,10 +17,10 @@ We start out with a template declaration
 
 
 {% highlight c++ %}
-    template <typename T>
-    class SmartPointer
-    {
-    };
+template <typename T>
+class SmartPointer
+{
+};
 {% endhighlight %}
 
 
@@ -29,9 +29,9 @@ We start out with a template declaration
  A smart pointer contains a raw pointer to the object it points to, as well as a reference counter.
 
 {% highlight c++ %}
-    private:
-       T* rawPointer;
-       int* refCount;
+private:
+   T* rawPointer;
+   int* refCount;
 {% endhighlight %}
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
@@ -39,89 +39,86 @@ Next we provide the default constructor, copy constructor, move constructor, ass
 For default constructor, we use initializer list to initialize the raw pointer and reference counter to  ```nullptr```.
 
 {% highlight c++ %}
-    // Default Constructor
-    SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
+// Default Constructor
+SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
 {% endhighlight %}
 
 Copy constructor uses initializer list to initilize ```rawPointer``` to ```other.rawPointer``` and ```refCount``` to ```other.refCount```. However, we also need to increment the reference counter.
 
 {% highlight c++ %}
-    // Copy Constructor
-    SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
-    {
-        ++(*refCount);
-    }
+// Copy Constructor
+SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), refCount(other.refCount)
+{
+    ++(*refCount);
+}
 {% endhighlight %}
 
 {% highlight c++ %}
-    // Move Constructor
-    SmartPointer<T>(SmartPointer<T> && other)
+// Move Constructor
+SmartPointer<T>(SmartPointer<T> && other)
+{
+    rawPointer = nullptr;
+    refCount = nullptr;
+    std::swap(rawPointer, other.rawPointer);
+    std::swap(refCount, other.refCount);
+}
+// Constructor from object pointer (for calling new)
+SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
+// Assignment operator for SmartPointer
+SmartPointer<T> & operator= (SmartPointer<T> const & other)
+{
+    // Decrement refCount on old value, clean up if needed
+    if (refCount != nullptr)
     {
-        rawPointer = nullptr;
-        refCount = nullptr;
-        std::swap(rawPointer, other.rawPointer);
-        std::swap(refCount, other.refCount);
+        --(*refCount);
+        if (*refCount == 0)
+        {
+            delete rawPointer;
+            rawPointer = nullptr;
+            delete refCount;
+            refCount = nullptr;
+        }
     }
 
-    // Constructor from object pointer (for calling new)
-    SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
+    // Assign values
+    rawPointer = other.rawPointer;
+    refCount = other.refCount;
+    ++(*refCount);
+    return *this;
+}
 
-    // Assignment operator for SmartPointer
-    SmartPointer<T> & operator= (SmartPointer<T> const & other)
+SmartPointer<T> & operator= (T* const object)
+{
+    if (refCount != nullptr)
     {
-        // Decrement refCount on old value, clean up if needed
-        if (refCount != nullptr)
+        --(*refCount);
+        if (*refCount == 0)
         {
-            --(*refCount);
-            if (*refCount == 0)
-            {
-                delete rawPointer;
-                rawPointer = nullptr;
-                delete refCount;
-                refCount = nullptr;
-            }
+            delete rawPointer;
+            rawPointer = nullptr;
+            delete refCount;
+            refCount = nullptr;
         }
-
-        // Assign values
-        rawPointer = other.rawPointer;
-        refCount = other.refCount;
-        ++(*refCount);
-        return *this;
     }
+    rawPointer = object;
+    refCount = new int(1);
 
-    SmartPointer<T> & operator= (T* const object)
+    return *this;
+}
+
+// Destructor
+~SmartPointer<T>()
+{
+    if (refCount != nullptr)
     {
-        if (refCount != nullptr)
+        --(*refCount);
+        if (*refCount == 0)
         {
-            --(*refCount);
-            if (*refCount == 0)
-            {
-                delete rawPointer;
-                rawPointer = nullptr;
-                delete refCount;
-                refCount = nullptr;
-            }
+            delete rawPointer;
+            rawPointer = nullptr;
+            delete refCount;
+            refCount = nullptr;
         }
-
-        rawPointer = object;
-        refCount = new int(1);
-
-        return *this;
     }
-
-    // Destructor
-    ~SmartPointer<T>()
-    {
-        if (refCount != nullptr)
-        {
-            --(*refCount);
-            if (*refCount == 0)
-            {
-                delete rawPointer;
-                rawPointer = nullptr;
-                delete refCount;
-                refCount = nullptr;
-            }
-        }
-    } 
+} 
 {% endhighlight %}
