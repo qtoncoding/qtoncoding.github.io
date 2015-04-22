@@ -11,11 +11,11 @@ tags: [C++, modern C++, pointer, smart]
 
 Pointers are hard to use and think about. There are many hazards that come with them such as dangling pointers and memory leaking. A solution to these issues is to use a smart pointer. A smart pointer usually is a wrapper around a raw pointer, with a reference count to keep track of the object, automatically cleaning up when the object is no longer referred to.
 
-In the Standard Templated Library of C++ there are 2 kinds of smart pointers: ```unique_ptr``` and ```shared_ptr```. They should be used instead of raw pointer in most cases, unless your target device cannot afford the neligible overhead of these poitners.
+In the Standard Templated Library of C++ there are 2 kinds of smart pointers: ```unique_ptr``` and ```shared_ptr```. They should be used instead of raw pointer in most cases, unless your target device cannot afford the neligible overhead of these pointers.
 
 If you are interested in how a smart pointer is generally implemented, this post will show you how it's done.
 
-<h3>Example</h3>
+<h3>Implementation</h3>
 We start out with a template declaration
 
 {% highlight c++ %}
@@ -160,7 +160,30 @@ So far so good. But a pointer that cannot be dereferenced isn't that useful. So 
     }
 {% endhighlight %}
 
+<h3>Example</h3>
+
+Here is a simple program to test out the smart pointer
+
+{% highlight c++ %}
+int main()
+{
+    SmartPointer<int> p1;                     // Default constructor, rawPointer and refCount are nullptr
+    SmartPointer<int> p2(new int(10));        // Copy constructor from object, *rawPointer = 10, refCount = 1
+    {
+        SmartPointer<int> p3 = p2;            // Assignment operator, *rawPointer = 10, refCount = 2
+    }                                         // p3 goes out of scope, refCount = 1
+    
+    {
+        SmartPointer<int> p4(p2);             // Assignment operator, *rawPointer = 10, refCount = 2
+    }                                         // p4 goes out of scope, refCount = 1
+    
+    SmartPointer<int> p5 = std::move(p2);     // Move constructor, *rawPointer = 10, refCount = 1
+                                              // p2->rawPointer = nullptr, p2->refCount = nullptr
+}                                             // p5 goes out of scope, refCount goes down to 0, object gets deleted 
+{% endhighlight %}
+
 There you go! Reference counting Smart Pointer isn't so hard now huh?
+
 
 Cheers,
 Thai
