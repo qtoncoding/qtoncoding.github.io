@@ -5,7 +5,6 @@ description: "A Simple Implementation of Reference Counting Smart Pointer in C++
 category: cplusplus
 tags: [C++, modern C++, pointer, smart]
 ---
-{% include JB/setup %}
 
 <!-- Overview -->
 <h3>Overview</h3>
@@ -16,7 +15,7 @@ Pointers are hard to use and think about. There are many hazards that come with 
 <h3>Example</h3>
 We start out with a template declaration
 <!-- Code -->
-{% highlight cplusplus linenos %}
+{% highlight cplusplus %}
 template <typename T>
 class SmartPointer
 {
@@ -27,7 +26,7 @@ class SmartPointer
  
  A smart pointer contains a raw pointer to the object it points to, as well as a reference counter.
  
- {% highlight cplusplus linenos %}
+ {% highlight cplusplus %}
  private:
     T* rawPointer;
     int* refCount;
