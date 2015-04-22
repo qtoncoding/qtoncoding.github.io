@@ -30,7 +30,7 @@ We start out with a template declaration
     private:
        T* rawPointer;
        int* refCount;
-{% endhighligh %}
+{% endhighlight %}
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
 
