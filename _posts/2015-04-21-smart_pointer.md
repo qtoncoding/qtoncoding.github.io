@@ -36,8 +36,7 @@ We start out with a template declaration
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
 
-For default constructor, we use initializer list to initialize the raw pointer and reference counter to 
-{% highlight c++ %} nullptr {% endhighlight %}
+For default constructor, we use initializer list to initialize the raw pointer and reference counter to  ```nullptr```.
 
 {% highlight c++ %}
     // Default Constructor
