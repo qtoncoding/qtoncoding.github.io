@@ -15,6 +15,7 @@ Pointers are hard to use and think about. There are many hazards that come with 
 <h3>Example</h3>
 We start out with a template declaration
 <!-- Code -->
+
 ```cplusplus
     template <typename T>
     class SmartPointer
