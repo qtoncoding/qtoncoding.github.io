@@ -149,7 +149,7 @@ Finally, we write the destructor. In the destructor we decrement reference count
 So far so good. But a pointer that cannot be dereferenced isn't that useful. So let's write the dereference operators. These operators return a reference to the object we point to.
 {% highlight c++ %}
         // Dereference operators
-    T& operator->() 
+    T & operator->() 
     {
         return *rawPointer;
     }
