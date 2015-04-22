@@ -31,6 +31,10 @@ class SmartPointer
  private:
     T* rawPointer;
     int* refCount;
- {% highlight cplusplus linenos %}
+ {% endhighlight %}
+
+
+Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
+{% highlight cplusplus linenos %}
  
- 
+{% endhighlight %}
