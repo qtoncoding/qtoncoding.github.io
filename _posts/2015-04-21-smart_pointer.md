@@ -53,6 +53,8 @@ SmartPointer<T>(SmartPointer<T> const & other) : rawPointer(other.rawPointer), r
 }
 {% endhighlight %}
 
+The move constructor is something new to people who are not familier to C++11. What it does is it steals the content of the other pointer without copying data over, leaving the other pointer with garbage or null. We accomplish this by initializing our fields to ```nullptr``` and use ```std::swap``` to swap the data around.
+
 {% highlight c++ %}
 // Move Constructor
 SmartPointer<T>(SmartPointer<T> && other)
@@ -62,8 +64,23 @@ SmartPointer<T>(SmartPointer<T> && other)
     std::swap(rawPointer, other.rawPointer);
     std::swap(refCount, other.refCount);
 }
+
+The next constructor is to create our pointer from a raw pointer, to use with syntax such as 
+
+{% highlight c++ %}
+SmartPointer<Cat> catPtr = new Cat();
+{% endhighlight %}
+
+We do this by initializing the ```rawPointer``` with the ```object``` pointer, and initialize ```refCount``` with a dynamically allocated ```int```.
+
+{% highlight c++ %}
 // Constructor from object pointer (for calling new)
 SmartPointer<T>(T* object) : rawPointer(object), refCount(new int(1)) {}
+{% endhighlight %}
+
+Next up, we define the assignment operators for another SmartPointer or a raw object pointer. To do this, we first decrement the reference counter, clean up the object if reference hits 0. After that assign ```rawPointer``` the object pointer, ```refCount``` to ```other.refCount``` or 1 if assigning to an object pointer and increment ```refCount```.
+
+{% highlight c++ %}
 // Assignment operator for SmartPointer
 SmartPointer<T> & operator= (SmartPointer<T> const & other)
 {
@@ -105,7 +122,11 @@ SmartPointer<T> & operator= (T* const object)
 
     return *this;
 }
+{% endhighlight %}
 
+Finally, we write the destructor. In the destructor we decrement reference counter, clean up the object and the reference counter if reference count is 0.
+
+{% highlight c++ %}
 // Destructor
 ~SmartPointer<T>()
 {
