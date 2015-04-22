@@ -167,19 +167,20 @@ Here is a simple program to test out the smart pointer
 {% highlight c++ linenos %}
 int main()
 {
-    SmartPointer<int> p1;                     // Default constructor, rawPointer and refCount are nullptr
-    SmartPointer<int> p2(new int(10));        // Copy constructor from object, *rawPointer = 10, refCount = 1
+    SmartPointer<int> p1;                      // Default constructor, rawPointer and refCount are nullptr
+    SmartPointer<int> p2(new int(10));         // Copy constructor from object, *rawPointer = 10, refCount = 1
     {
-        SmartPointer<int> p3 = p2;            // Assignment operator, *rawPointer = 10, refCount = 2
-    }                                         // p3 goes out of scope, refCount = 1
+        SmartPointer<int> p3 = p2;             // Assignment operator, *rawPointer = 10, refCount = 2
+    }                                          // p3 goes out of scope, refCount = 1
     
     {
-        SmartPointer<int> p4(p2);             // Assignment operator, *rawPointer = 10, refCount = 2
-    }                                         // p4 goes out of scope, refCount = 1
+        SmartPointer<int> p4(p2);              // Assignment operator, *rawPointer = 10, refCount = 2
+    }                                          // p4 goes out of scope, refCount = 1
     
-    SmartPointer<int> p5 = std::move(p2);     // Move constructor, *rawPointer = 10, refCount = 1
-                                              // p2->rawPointer = nullptr, p2->refCount = nullptr
-}                                             // p5 goes out of scope, refCount goes to 0, object gets deleted 
+    SmartPointer<int> p5 = std::move(p2);      // Move constructor, *rawPointer = 10, refCount = 1
+                                               // p2->rawPointer = nullptr, p2->refCount = nullptr
+    std::cout << "Value: " << *p5 << std:endl; // Dereference
+}                                              // p5 goes out of scope, refCount goes to 0, object gets deleted 
 {% endhighlight %}
 
 There you go! Reference counting Smart Pointer isn't so hard now huh?
