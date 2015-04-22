@@ -15,31 +15,20 @@ Pointers are hard to use and think about. There are many hazards that come with 
 <h3>Example</h3>
 We start out with a template declaration
 <!-- Code -->
-{% highlight cplusplus %}
+    template <typename T>
+    class SmartPointer
+    {
+    };
 
-template <typename T>
-class SmartPointer
-{
-};
-
-{% endhighlight %}
 <!-- END Code -->
  A template will make this pointer usable with any type of object we want.
  
  A smart pointer contains a raw pointer to the object it points to, as well as a reference counter.
- 
- {% highlight cplusplus %}
-
- private:
-    T* rawPointer;
-    int* refCount;
-
- {% endhighlight %}
-
+    private:
+       T* rawPointer;
+       int* refCount;
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
-{% highlight cplusplus linenos %}
-
     // Default Constructor
     SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
     
@@ -119,4 +108,3 @@ Next we provide the default constructor, copy constructor, move constructor, ass
             }
         }
     } 
-{% endhighlight %}
