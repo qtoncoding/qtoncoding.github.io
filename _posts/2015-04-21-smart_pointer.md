@@ -179,7 +179,7 @@ int main()
     
     SmartPointer<int> p5 = std::move(p2);     // Move constructor, *rawPointer = 10, refCount = 1
                                               // p2->rawPointer = nullptr, p2->refCount = nullptr
-}                                             // p5 goes out of scope, refCount goes down to 0, object gets deleted 
+}                                             // p5 goes out of scope, refCount goes to 0, object gets deleted 
 {% endhighlight %}
 
 There you go! Reference counting Smart Pointer isn't so hard now huh?
