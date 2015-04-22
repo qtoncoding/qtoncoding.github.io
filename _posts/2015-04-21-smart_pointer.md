@@ -16,14 +16,10 @@ Pointers are hard to use and think about. There are many hazards that come with 
 We start out with a template declaration
 <!-- Code -->
 
-```cpp
-
     template <typename T>
     class SmartPointer
     {
     };
-    
-```
 
 <!-- END Code -->
  A template will make this pointer usable with any type of object we want.
@@ -37,7 +33,6 @@ We start out with a template declaration
 {% endhighligh %}
 
 Next we provide the default constructor, copy constructor, move constructor, assignment operator for object pointer and smart pointer and finally a destructor.
-```cpp
 
     // Default Constructor
     SmartPointer<T>() : rawPointer(nullptr), refCount(nullptr) {}
@@ -118,4 +113,3 @@ Next we provide the default constructor, copy constructor, move constructor, ass
             }
         }
     } 
-```
