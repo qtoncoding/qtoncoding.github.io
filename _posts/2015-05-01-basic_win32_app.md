@@ -91,7 +91,7 @@ Now that we have a Window Class, we need to Register it with Windows by using ``
 
 if (RegisterClass(&WindowClass))
 {
-
+   // Insert CreatWindowEx code here
 }
 else
 {
