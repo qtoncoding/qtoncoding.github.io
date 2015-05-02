@@ -2,7 +2,7 @@
 layout: post
 title: "Basic Win32 Application"
 description: "Basic structures of a Win32 application"
-category: Win32, C++
+category: cplusplus
 tags: [win32, c++, windows]
 ---
 
