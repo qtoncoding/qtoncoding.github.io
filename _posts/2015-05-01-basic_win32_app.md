@@ -159,11 +159,31 @@ else
 
 {% endhighlight %}
 
-[GetMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644936(v=vs.85).aspx) takes 4 arguments, the first is a reference to the message struct, the second one is the window to listen to, if we pass ```nullptr``` to it, this will get the messages from the queue of our app in general. The last two arguments are low and high filters for messages. Passing ```0``` to both of them will not filter any message.
+* [GetMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644936(v=vs.85).aspx) takes 4 arguments, the first is a reference to the message struct, the second one is the window to listen to, if we pass ```nullptr``` to it, this will get the messages from the queue of our app in general. The last two arguments are low and high filters for messages. Passing ```0``` to both of them will not filter any message.
 
-[TranslateMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644955(v=vs.85).aspx) translate virtual-key messages to character messages. This is used to handle keyboard inputs, mapping keys to characters.
+* [TranslateMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644955(v=vs.85).aspx) translate virtual-key messages to character messages. This is used to handle keyboard inputs, mapping keys to characters.
 
-[DispatchMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644934(v=vs.85).aspx) sends the message to the Windows Procedure for processing. We will discuss the Window Procedure right now.
+* [DispatchMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644934(v=vs.85).aspx) sends the message to the Windows Procedure for processing. We will discuss the Window Procedure right now.
 
 <h3>Window Procedure</h3>
+
+Window Procedure is a ```CALLBACK``` that gets called after ```DispatchMessage```. It processes the message dispatched. Let's add that above ```WinMain```.
+
+{% highlight c++ %}
+
+LRESULT CALLBACK
+MainWindowCallback (HWND WindowHandle,
+                    UINT message,
+                    WPARAM wParam,
+                    LPARAM lParam)
+{
+
+}
+
+{% endhighlight %}
+
+* The first argument is the ```HANDLE``` to the window that we are processing messages for.
+* The second argument is the message itself.
+* The third argument is a WPARAM (unsigned int pointer) that contains data values, usually for sizes and positions (They can be extracted using ```HIWORD``` and ```LOWORD``` macros). This varies for each message.
+* The last argument is a LPARAM (long void pointer) that contains custom values to be passed along with the message. The data can be read by ```reinterpret_cast``` this parameter to the type intended. This varies for each message.
 
