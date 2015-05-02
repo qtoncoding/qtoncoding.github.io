@@ -89,7 +89,7 @@ a.label {
 .gp             { font - weight: bold }         /* Generic.Prompt */
 .gs             { font - weight: bold }         /* Generic.Strong */
 .gu             { font - weight: bold }         /* Generic.Subheading */
-.kc             { color: #0000ff }              /* Keyword.Constant */
+.kc             { color: #bd63c5 }              /* Keyword.Constant */
 .kd             { color: #0000ff }              /* Keyword.Declaration */
 .kn             { color: #0000ff }              /* Keyword.Namespace */
 .kp             { color: #0000ff }              /* Keyword.Pseudo */
