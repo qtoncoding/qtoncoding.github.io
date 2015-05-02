@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Basic Win32 Application"
+title: "Essentials of Win32 Application"
 description: "Basic structures of a Win32 application"
 category: cplusplus
 tags: [win32, c++, windows]
