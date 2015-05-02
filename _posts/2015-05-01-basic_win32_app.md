@@ -182,6 +182,8 @@ MainWindowCallback (HWND WindowHandle,
 
 {% endhighlight %}
 
+The Window Procedure returns an LRESULT, which signals the app how each message was handled.
+
 * The first argument is the ```HANDLE``` to the window that we are processing messages for.
 
 * The second argument is the message itself.
@@ -207,3 +209,17 @@ switch (message)
 return Result;
 
 {% endhighlight %}
+
+A list of Window Messages can be found [here](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644927(v=vs.85).aspx). A message can be system-defined or application-defined. For most basic applications, we only process messages with ```WM``` prefix.
+
+Here in the ```default``` case, we just call ```DefWindowProc```, which is a default Window Procedure created by Windows to to default behaviors on messages.
+
+Finally, we need to assign this function to ```WindowClass.lpfnWndProc```.
+
+{% highlight c++ %}
+
+WindowClas.lpfnWndProc = MainWindowCallback;
+
+{% endhighlight %}
+
+That's all you need to know about the essential of a Win32 app. I know there is a lot to take in here and I'm glad there are alternative frameworks to create applications for Windows now. But they all boil down to these concept, and sometimes it's nice to know what's going on under the hood. If you have any questions, don't hesitate to ask me on Facebook.
