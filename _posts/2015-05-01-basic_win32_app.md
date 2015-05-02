@@ -93,8 +93,69 @@ if (RegisterClass(&WindowClass))
 {
 
 }
+else
+{
+    OutputDebugStringA("Cannot register Window Class\n");
+}
 
 {% endhighlight %}
 
+Once our Window Class is successfully registered, we create a window on the screen. This is done by calling [CreateWindowEx](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632680(v=vs.85).aspx).
 
+{% highlight c++ %}
+
+HWND WindowHandle = CreateWindowEx(0,
+                                   WindowClass.lpszClassName,
+                                   "AwesomeWindowOnTheScreen",
+                                   WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+                                   CW_USEDEFAULT,
+                                   CW_USEDEFAULT,
+                                   CW_USEDEFAULT,
+                                   CW_USEDEFAULT,
+                                   nullptr,
+                                   nullptr,
+                                   Instance,
+                                   nullptr);
+                                   
+{% endhighlight %}
+
+This function is rather lengthy, so I'll explain each argument in simple terms.
+
+The first argument is a bit field for [Extended Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ff700543(v=vs.85).aspx). For now, we don't use any of them, so we pass ```0``` in.
+
+The second argument is the Window Class name, so pass the WindowClass.lpszClassName right in there.
+
+The third argument is the [Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632600(v=vs.85).aspx). It's also a bit field, and we use ```WS_OVERLAPPEDWINDOW```, which is a preset that gives us a window with a title bar, resizable borders, a system menu when you right click on the title bar, minimize and maximize buttons. We also use ```WS_VISIBLE``` to make the window visible right away.
+
+The next four arguments are X and Y coordinate of the window on the screen as well as width and height, in that order. Here we use the constance ```CW_USEDEFAULT``` to make Windows give use default value;
+
+The eigth argument is the ```HANDLE``` to the parent window. Since this is the first window in our app, we pass ```nullptr``` to it.
+
+The next argument is the ```HANDLE``` to the menus on our windows (such as Files, Edit, View, Help etc...). Since we don't want any menus, we pass ```nullptr``` to it.
+
+The second to last argument is the instance of our app. Pass ```Instance``` to it.
+
+The last argument is a bit tricky. It's a pointer to a custom chunk of data to be passed to the Window, it will be in the ```LPARAM``` of the ```WM_CREATE``` message passed to the window. This can be any data, casted to ```void*``` by a ```reinterpret_cast``` and casted back to the original data type in the message handler.
+
+After this call to ```CreateWindowEx``` we would have a window on the screen.
+
+A window constantly receives messages from Windows to notify it of things happening. We need to fetch these message, translate them and dispatch them.
+
+{% highlight c++ %}
+
+if (WindowHandle)
+{
+    MSG message;
+    while (GetMessage(&message, nullptr, 0, 0)
+    {
+        TranslateMessage(&message);
+        DispatchMessage(&message);
+    }
+}
+else 
+{
+    OutputDebugStringA("Cannot create Window\n");
+}
+
+{% endhighlight %}
 
