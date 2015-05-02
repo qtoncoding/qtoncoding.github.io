@@ -2,7 +2,7 @@
 layout: post
 title: "Basic Win32 Application"
 description: "Basic structures of a Win32 application"
-category: Win32
+category: Win32, C++
 tags: [win32, c++, windows]
 ---
 
@@ -218,7 +218,7 @@ Finally, we need to assign this function to ```WindowClass.lpfnWndProc```.
 
 {% highlight c++ %}
 
-WindowClas.lpfnWndProc = MainWindowCallback;
+WindowClass.lpfnWndProc = MainWindowCallback;
 
 {% endhighlight %}
 
