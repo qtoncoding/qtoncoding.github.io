@@ -36,14 +36,14 @@ Unlike normal C++ programs, WinMain will not be called immediately when we start
 It's supposed to be called by the Windows Runtime. This is why this function is a ```CALLBACK```, 
 that means the system will call back into our code from external code. 
 
-The first argument is a ```HANDLE``` to the instance of our app (hence ```HINSTANCE```, ```HANDLE-INSTANCE```).
+* The first argument is a ```HANDLE``` to the instance of our app (hence ```HINSTANCE```, ```HANDLE-INSTANCE```).
 
-The second argument is the ```HANDLE``` to the previous instance of our app. 
+* The second argument is the ```HANDLE``` to the previous instance of our app. 
 If an app is already running and it gets launched for the second time, the first instance will be passed into this argument.
 
-The third argument is a long pointer to a string, which is the command lines used when the app is launched.
+* The third argument is a long pointer to a string, which is the command lines used when the app is launched.
 
-The last argument is a number, an enum if you will, for which state the application will start in, normal window, minimized or maximized.
+* The last argument is a number, an enum if you will, for which state the application will start in, normal window, minimized or maximized.
 
 Now that we have the main function, what to put in there? 
 
@@ -67,22 +67,22 @@ WindowClass.lpszClassName = "CoolAwesomeWin32App";
 
 {% endhighlight %}
 
-```WNDCLASS WindowClass = {}``` will create a new struct of type WNDCLASS and initialize all fields to NULL. 
+* ```WNDCLASS WindowClass = {}``` will create a new struct of type WNDCLASS and initialize all fields to NULL. 
 This is needed because we are not manually filling in all fields of the struct and they are better off being NULL.
 
-```WindowClass.style``` sets the style of the Window Class. Here we use ```CS_HREDRAW``` and ```CS_VREDRAW``` by OR-ing them together.
+* ```WindowClass.style``` sets the style of the Window Class. Here we use ```CS_HREDRAW``` and ```CS_VREDRAW``` by OR-ing them together.
 These constances are bit flags, so to use them together, bitwise OR is the operation we want. ```CS_HREDRAW``` will make sure the drawing area of our app
 is redrawn when we resize it horizontally. ```CS_VREDRAW``` does the same thing, vertically.
 
-```WindowClass.hInstance``` is where we attach the application instance to the Window Class. So we just assign ```Instance``` to it.
+* ```WindowClass.hInstance``` is where we attach the application instance to the Window Class. So we just assign ```Instance``` to it.
 
-```WindowClass.hIcon``` is the Icon for our app. Setting it to ```nullptr``` will force Windows to use a default icon.
+* ```WindowClass.hIcon``` is the Icon for our app. Setting it to ```nullptr``` will force Windows to use a default icon.
 
-```WindowClass.hCursor``` is the mouse cursor for the app. Here we use ```LoadCursor``` to load the standard arrow cursor of Windows by passing it ```nullptr``` for the instance to get the cursor resource from, and ```IDC_ARROW``` for the default arrow.
+* ```WindowClass.hCursor``` is the mouse cursor for the app. Here we use ```LoadCursor``` to load the standard arrow cursor of Windows by passing it ```nullptr``` for the instance to get the cursor resource from, and ```IDC_ARROW``` for the default arrow.
 
-```WindowClass.lpszClassName``` is the name for the class. Simply assign a string to it.
+* ```WindowClass.lpszClassName``` is the name for the class. Simply assign a string to it.
 
-This left us with ```WindowClass.lpfnWndProc```. This is a long pointer to a function called Window Procedure. 
+* This left us with ```WindowClass.lpfnWndProc```. This is a long pointer to a function called Window Procedure. 
 This function is a callback what will handle the Window Messages passed to our app from Windows.
 
 Now that we have a Window Class, we need to Register it with Windows by using ```RegisterClass```.
@@ -121,21 +121,21 @@ HWND WindowHandle = CreateWindowEx(0,
 
 This function is rather lengthy, so I'll explain each argument in simple terms.
 
-The first argument is a bit field for [Extended Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ff700543(v=vs.85).aspx). For now, we don't use any of them, so we pass ```0``` in.
+* The first argument is a bit field for [Extended Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ff700543(v=vs.85).aspx). For now, we don't use any of them, so we pass ```0``` in.
 
-The second argument is the Window Class name, so pass the WindowClass.lpszClassName right in there.
+* The second argument is the Window Class name, so pass the WindowClass.lpszClassName right in there.
 
-The third argument is the [Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632600(v=vs.85).aspx). It's also a bit field, and we use ```WS_OVERLAPPEDWINDOW```, which is a preset that gives us a window with a title bar, resizable borders, a system menu when you right click on the title bar, minimize and maximize buttons. We also use ```WS_VISIBLE``` to make the window visible right away.
+* The third argument is the [Window Style](https://msdn.microsoft.com/en-us/library/windows/desktop/ms632600(v=vs.85).aspx). It's also a bit field, and we use ```WS_OVERLAPPEDWINDOW```, which is a preset that gives us a window with a title bar, resizable borders, a system menu when you right click on the title bar, minimize and maximize buttons. We also use ```WS_VISIBLE``` to make the window visible right away.
 
-The next four arguments are X and Y coordinate of the window on the screen as well as width and height, in that order. Here we use the constance ```CW_USEDEFAULT``` to make Windows give use default value;
+* The next four arguments are X and Y coordinate of the window on the screen as well as width and height, in that order. Here we use the constance ```CW_USEDEFAULT``` to make Windows give use default value;
 
-The eigth argument is the ```HANDLE``` to the parent window. Since this is the first window in our app, we pass ```nullptr``` to it.
+* The eigth argument is the ```HANDLE``` to the parent window. Since this is the first window in our app, we pass ```nullptr``` to it.
 
-The next argument is the ```HANDLE``` to the menus on our windows (such as Files, Edit, View, Help etc...). Since we don't want any menus, we pass ```nullptr``` to it.
+* The next argument is the ```HANDLE``` to the menus on our windows (such as Files, Edit, View, Help etc...). Since we don't want any menus, we pass ```nullptr``` to it.
 
-The second to last argument is the instance of our app. Pass ```Instance``` to it.
+* The second to last argument is the instance of our app. Pass ```Instance``` to it.
 
-The last argument is a bit tricky. It's a pointer to a custom chunk of data to be passed to the Window, it will be in the ```LPARAM``` of the ```WM_CREATE``` message passed to the window. This can be any data, casted to ```void*``` by a ```reinterpret_cast``` and casted back to the original data type in the message handler.
+* The last argument is a bit tricky. It's a pointer to a custom chunk of data to be passed to the Window, it will be in the ```LPARAM``` of the ```WM_CREATE``` message passed to the window. This can be any data, casted to ```void*``` by a ```reinterpret_cast``` and casted back to the original data type in the message handler.
 
 After this call to ```CreateWindowEx``` we would have a window on the screen.
 
@@ -158,4 +158,12 @@ else
 }
 
 {% endhighlight %}
+
+[GetMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644936(v=vs.85).aspx) takes 4 arguments, the first is a reference to the message struct, the second one is the window to listen to, if we pass ```nullptr``` to it, this will get the messages from the queue of our app in general. The last two arguments are low and high filters for messages. Passing ```0``` to both of them will not filter any message.
+
+[TranslateMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644955(v=vs.85).aspx) translate virtual-key messages to character messages. This is used to handle keyboard inputs, mapping keys to characters.
+
+[DispatchMessage](https://msdn.microsoft.com/en-us/library/windows/desktop/ms644934(v=vs.85).aspx) sends the message to the Windows Procedure for processing. We will discuss the Window Procedure right now.
+
+<h3>Window Procedure</h3>
 
