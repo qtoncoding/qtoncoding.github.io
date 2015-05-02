@@ -183,7 +183,27 @@ MainWindowCallback (HWND WindowHandle,
 {% endhighlight %}
 
 * The first argument is the ```HANDLE``` to the window that we are processing messages for.
+
 * The second argument is the message itself.
+
 * The third argument is a WPARAM (unsigned int pointer) that contains data values, usually for sizes and positions (They can be extracted using ```HIWORD``` and ```LOWORD``` macros). This varies for each message.
+
 * The last argument is a LPARAM (long void pointer) that contains custom values to be passed along with the message. The data can be read by ```reinterpret_cast``` this parameter to the type intended. This varies for each message.
 
+Inside this function, we perform a ```switch``` on the ```message``` argument to determine which message it is.
+
+{% highlight c++ %}
+
+LRESULT Result = 0;
+switch (message)
+{
+    default:
+    {
+        Result = DefWindowProc(WindowHandle, message, wParam, lParam);
+    }
+    break;
+}
+
+return Result;
+
+{% endhighlight %}
