@@ -75,9 +75,14 @@ a.label {
   border: 1px solid #4c964d;
   color: #FFF; }
 
+.highlight pre, pre, .highlight .hll { 
+   background-color: #49483E; 
+   border: 1px solid #ccc; 
+   padding: 6px 10px; 
+   border-radius: 3px; 
+   color: #FFFFFF; 
+} 
 
-pre{ background - color: #404040 }
-.hll{ background - color: #404040 }
 .c{ color: #999999; font - style: italic } /* Comment */
 .err{ color: #a61717; background - color: #e3d2d2 } /* Error */
 .g{ color: #d0d0d0 } /* Generic */
