@@ -20,7 +20,7 @@ But it was all fun and games,  and I didn't give it much thought until recently.
 It took me 2 hours to develop the idea into a working solution, and 15 minutes to code it out. Today's post will walk you through my solution for this problem.
 
 <h3>Implementation</h3>
-For testing and profiling purpose, I'm using 2 input files, 1 is one that I typed in manually, containing mostly anagrams and can be found [here](/../files/input.txt), and the other is the Mieliestronk English word list (which can be found [here](http://www.mieliestronk.com/corncob_lowercase.txt)).
+For testing and profiling purpose, I'm using 2 input files, 1 is one that I typed in manually, containing mostly anagrams and can be found [here](https://github.com/qtoncoding/qtoncoding.github.io/blob/master/files/input.txt), and the other is the Mieliestronk English word list (which can be found [here](http://www.mieliestronk.com/corncob_lowercase.txt)).
 
 And since I love C++, let's use a lot of cool modern C++ features in this implementation!
 
