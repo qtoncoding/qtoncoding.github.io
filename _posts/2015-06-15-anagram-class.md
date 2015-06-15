@@ -117,8 +117,8 @@ First I open a file for writing using ```ofstream```. Then I create a string cal
 For every entry in the signed dictionary, if we encounter a new anagram class, print out a new line to the output file. Then assign the new anagram signature to ```prevSign```, increment lineNumber and print the actual word out to output file, followed by a space.
 
 <h3>Performance</h3>
-This program was compiled with Visual Studio 2015 RC on my computer, when tested with the smaller input file of 40 words/lines, it took 14ms to finish. 
-When tested with a larger input file, the word list from the Internet, of 58110 words/lines, it took 433ms to finish. Personally, I think that's pretty fast.
+This program was compiled with Visual Studio 2015 RC on my computer, when tested with the smaller input file of 40 words, it took 14ms to finish. 
+When tested with a larger input file, the word list from the Internet, of 58110 words, it took 433ms to finish. Personally, I think that's pretty fast.
 
 There we have it, a nice simple solution to a rather daunting problem at first. Hope you find this useful!
 
