@@ -1,0 +1,169 @@
+---
+layout: post
+title: "Let's talk Pointers"
+description: "My attempt to explain pointers to beginners."
+category: cplusplus
+tags: [C++, c, pointer, memory, reference]
+---
+
+<!-- Overview -->
+<h3>Background</h3>
+
+One of the most common answers to "What is hard for new programmers?" is "pointers". 
+Personally I don't think pointers themselves are hard, but rather the syntax is confusing. 
+But there are also people who genuinely don't understand pointers, then I blame it on Computer Science education focusing
+a lot of high level languages and not basic computer science concepts.
+
+In this blog post I will try to explain pointers and the concepts needed to understand them in simple terms with real world analogies.
+Hopefully by the end of the blog post, pointers won't be confusing for anyone!
+
+<h3>Memory</h3>
+Computer has memories. USB Sticks, CD disks, Hard Drives, RAM, CPU Cache, Registers are all memories, with varying sizes and speeds.
+Memory is very important to a computer program, you need it to store numbers, strings, objects and variables in general. 
+Even the code of the program needs to be stored in memory. The computer will look at the memory and see what instructions it needs to perform.
+
+So how do you know where things are in memory? By address of course. In real world we have a lot of people, how do you quickly refer to someone?
+By name! Or in a city with a lot of houses and buildings, you need an address to actually find out where the building is. It's the same for data stored in memory.
+
+In a 32bit computer, we have 32 bits to express a memory address. 32 bits is 2^32 = 4,294,967,296. That's over 4 billions address, from 0 to 4,294,967,296. Theoretically (ignoring "3Gb Barrier"), a 32bit cpu architecture can refer to over 4 billions address.
+This is like a book can have a finite number of pages. In these memory slots, refered to by memory addresses, we store our data.
+
+So what do all of these have to do with pointers?
+
+<h3>Pointers</h3>
+
+Let's have a small example. We have a number 100 we just calculated (10 * 10) and we want to store it in a variable ```a_hundred```.
+This variable will be stored in memory, let's say it is stored in location 35. Now we can refer to it by saying ```a_hundred```, or we can say "that number stored at location 35".
+A pointer, is another variable that store the number 35, let's call it ```pointer_to_a_hundred```. That way you can refer to ```a_hundred``` as "that number stored at location ```pointer_to_a_hundred```".
+
+In the real world, a building can be referred to by the building's name, or by its address. The pointer is the directory entry that contains this address.
+
+For example, you can say "The White House" to refer to the building where the President of the United States lives and works, but for anyone who isn't familar with the neighborhood to come see, or modify that building, you need to say "1600 Pennsylvania Avenue, Washington D.C.".
+The pointer is the line in the directory that says "1600 Pennsylvania Avenue, Washington D.C.".
+
+Now you will probably tell me "Sure, I know all these stuff, what about the syntax?". Well here are the syntaxes of pointers in C/C++.
+
+{% highlight c++ linenos %}
+int number = 100;
+int* pointer_to_number = &number;
+int number_plus_one = *pointer_to_number + 1;
+int* another_pointer_to_number = pointer_to_number;
+++*pointer_to_number;
+{% endhighlight %}
+
+On the first line of code, we create a variable called ```number``` and give it value 100. 
+
+On the second line, we create a pointer to a number, by writing the type we are pointing to, in this case ```int``` and add the asterisk ```*``` after it (with or without space in between, doesn't matter),
+name it ```pointer_to_number``` and assign the __address__ of ```number``` to it, by writing ```&``` before ```number```. (& before a variable will give you the address of that variable in memory, like &The_White_House will give "1600 Pennsylvania Avenue, Washington D.C.").
+This is called a __reference operator__.
+Now in memory we will have another variable, called ```pointer_to_number``` and its value is the address of ```number```.
+
+On the third line, we create a new number, call it ```number_plus_one``` and assign the value pointed to by ```pointer_to_number``` plus 1. 
+This is done by writing ```*``` before ```pointer_to_number```. This is a __dereference operator__. You can see it is the reverse of ```&```.
+```&``` in front of a variable gives the address, ```*``` in front of an address (the pointer, actually) gives the variable.
+
+On the forth line, we create a pointer to a number, assigning the value of ```pointer_to_number``` to it. But what is the value of ```pointer_to_number```?
+That's right, the address of ```number```!. This means ```another_pointer_to_number``` also points to ```number```!
+
+Lastly, we increase number itself by 1. This is done by using __increment operator__ ```++```. 
+This operator is places in front of the value pointer to by ```pointer_to_number```. We get this value by __dereferencing__ ```pointer_to_number```, using ```*```.
+Placing the __increment operator__ in front of a value is called __pre-increment__ (similarly, placing it after a value is called __post-increment__).
+
+At this pointer, ```number``` is 11. Dereferencing ```pointer_to_number``` (```*pointer_to_number```) is also 11. Can you guess what ```*another_pointer_to_number``` is?
+That's right, also 11!
+
+Now someone will say "Those things are simple, what the heck is that arrow thing I saw the other day?". I'm just about to talk about that!
+
+I hope everyone knows what a struct or a class is. They are simply a bunch of variables, grouped together and might be given a name (class also give them functions to work with). Let's create a struct to store location X and Y on a map!
+
+{% highlight c++ linenos %}
+struct
+{
+  int X;
+  int Y;
+} Position;
+{% endhighlight %}
+
+We have a struct called ```Position```, it contains 2 int's, X and Y. Simple eh?
+Now let's use this struct.
+
+{% highlight c++ linenos %}
+Position p1 = {0, 0};
+Position* pointer_to_p1 = &p1;
+int p1_X = pointer_to_p1->X;
+{% endhighlight %}
+
+Here we create a ```Position```, call it ```p1``` and give it 0s for X and Y. Then we create a pointer to that position, called ```pointer_to_p1```. 
+You can see the above syntax being used here.
+
+Now create a number, call it ```p1_X```, assign to it the value of X inside p1. Here it's done by using the __arrow operator__.
+This operator is equivalent to writing ```(*p1).```, that is:
+
+- Dereference the pointer to get the struct pointer to by that pointer.
+- Access a member of that struct by using ```.```
+
+<h3>Pass by Value and Pass by Reference</h3>
+
+This is a topic that is brought up a lot in beginners programming. So what is it?
+
+Let's consider this example.
+
+{% highlight c++ linenos %}
+void increment(int x)
+{
+    x = x + 1;
+}
+{% endhighlight %}
+
+This function does just what is says, take a number, increase it by 1. Or does it?
+
+It does not, unfortunately, the number passed to this function will remain the same. This is because of "Pass by value". Passing by value means that the arguments you give a function to work with,
+when the function starts, it creates local copies of those arguments and work with those local copies. The copies are deleted when the function finishes.  
+Conversely, "Pass by reference" means that you give a function arguments and the function works with the arguments directly, without making local copies.
+C only supports passing by value. So how would you make a function that takes a number, adds 1 to that number and actually changes it?
+
+{% highlight c++ linenos %}
+void increment(int* x)
+{
+    *x = *x + 1;
+}
+{% endhighlight %}
+
+What function above takes a pointer to a number instead of the number. This way, when the function starts, it creates a copy of the __address__, not the number itself. The address, copied or not, will point to the same number.
+Then the function increases that number by dereferencing the pointer, add one, and assign the result to the number at pointed to by the pointer.
+
+In C++ however, there is an alternative way to write this.
+
+{% highlight c++ linenos %}
+void increment(int& x)
+{
+    x = x + 1;
+}
+{% endhighlight %}
+
+This function takes a number x, by reference. That means it takes the number directly, make no copies, and does the operation on the number itself.
+You can see this is much closer to the intention of the function, and the usage of the function would be easier too.
+
+With C, to use ```increment(int* x)``` we have to write
+
+{% highlight c++ linenos %}
+int x = 10;
+increment(&x);
+{% endhighlight %}
+
+But with C++, using  ```increment(int& x)```, we only have to write
+
+{% highlight c++ linenos %}
+int x = 10;
+increment(x);
+{% endhighlight %}
+
+and we will get the same effect.
+
+As the rule of thumb, unless you have to do pointer arithmetic (C array, which I will cover in another blog post) or you are programming in C strictly, use pass by reference instead of passing pointers.
+
+Now that we are at the end of the blog post, I hope pointers are clear to you. If you have any questions, don't hesitate to ask me, I'll try my best to answer them!
+
+Cheers,
+Thai
+
