@@ -88,7 +88,7 @@ sort(signedDictionary.begin(),
         });
 {% endhighlight %}
 
-Here you can see the standard sort algorithm comes into play again, but this time it has a different form. Previously, since I was just sorting characters in a string, I let C++ use its default comparator. This time, however, since we are sorting pairs of strings, I have to provide my own comparator.
+Here you can see the standard sort algorithm comes into play again, but this time it has a different form. Previously, since I was just sorting characters in a string, I let C++ use its default comparison. This time, however, since we are sorting pairs of strings, I have to provide my own comparison.
 A lambda is passed as the 3rd argument to ```sort```. This lambda takes 2 arguments, each is a pair of string string. It will then compare each pair by comparing the signature first, then if the signature are the same, it compares the actual word. In this case, standard string has comparison operator overloaded, so I don't have to roll my own string comparison.
 
 Finally, we output our results. I want all words that are anagrams to be on the same line, each line will be an anagram class.
