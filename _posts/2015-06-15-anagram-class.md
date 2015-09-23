@@ -59,17 +59,17 @@ Next up, we do a bit of preprocessing on the dictionary. For each word, we find 
 {% highlight c++ %}
 // process input
 vector<pair<string, string>> signedDictionary;
-for (auto & word : dictionary)
-{
-    string sortedWord = word;
-    sort(sortedWord.begin(), sortedWord.end());
-    auto entry = make_pair(sortedWord, word);
-    signedDictionary.push_back(entry);
-}
+for_each(dictionary.begin(), dictionary.end(), [&signedDictionary] (auto& word) 
+                                                {
+                                                    string sortedWord = word;
+                                                    sort(sortedWord.begin(), sortedWord.end());
+                                                    auto entry = make_pair(sortedWord, word);
+                                                    signedDictionary.push_back(entry);
+                                                });
 {% endhighlight %}
 
 Here I use a standard templated library ```pair``` to store the signature and the word itself. The pairs are then put into a dictionary called ```signedDictionary```. 
-The ```for``` loop is a ranged for-loop, using ```auto``` type deduction, referencing each word in the dictionary (so we don't have to copy it everytime).
+Here I use the ```for_each``` algorithm from the header ```<algorithm>```, give it the begin and end of the ```dictionary``` vector as 1st and 2nd argument. The third argument is a lambda, which is an anonymous function. This lambda captures ```signedDictionary``` by reference, takes ```word``` as an argument by reference (```word```'s type is deducted using ```auto```).
 A duplicate is made for each word, then I apply the standard sorting algorithm on the word, passing the ```begin``` and ```end``` iterators in. The standard sort is an in place sort, that's why we have to make a duplicate of our word.
 Finally an entry for the signed dictionary is made by ```make_pair```.
 
@@ -88,7 +88,7 @@ sort(signedDictionary.begin(),
 {% endhighlight %}
 
 Here you can see the standard sort algorithm comes into play again, but this time it has a different form. Previously, since I was just sorting characters in a string, I let C++ use its default comparator. This time, however, since we are sorting pairs of strings, I have to provide my own comparator.
-One cool feature of modern C++ is lambda, a lambda is passed as the 3rd argument to ```sort```. This lambda takes 2 arguments, each is a pair of string string. It will then compare each pair by comparing the signature first, then if the signature are the same, it compares the actual word. In this case, standard string has comparison operator overloaded, so I don't have to roll my own string comparison.
+A lambda is passed as the 3rd argument to ```sort```. This lambda takes 2 arguments, each is a pair of string string. It will then compare each pair by comparing the signature first, then if the signature are the same, it compares the actual word. In this case, standard string has comparison operator overloaded, so I don't have to roll my own string comparison.
 
 Finally, we output our results. I want all words that are anagrams to be on the same line, each line will be an anagram class.
 
@@ -97,9 +97,8 @@ Finally, we output our results. I want all words that are anagrams to be on the 
 ofstream outputFile("output.txt");
 string prevSign;
 int lineNumber = 0;
-for (auto & entry : signedDictionary)
+for_each(signedDictionary.begin(), signedDictionary.end(), [&outputFile, &prevSign, &lineNumber] (auto& entry)
 {
-    // If new group, go to next line
     if (entry.first != prevSign && lineNumber > 0)
     {
         outputFile << '\n';
@@ -108,7 +107,7 @@ for (auto & entry : signedDictionary)
     prevSign = entry.first;
     ++lineNumber;
     outputFile << entry.second << " ";
-}
+});
 outputFile.close();
 {% endhighlight %}
 
