@@ -59,13 +59,14 @@ Next up, we do a bit of preprocessing on the dictionary. For each word, we find 
 {% highlight c++ %}
 // process input
 vector<pair<string, string>> signedDictionary;
-for_each(dictionary.begin(), dictionary.end(), [&signedDictionary] (auto& word) 
-                                                {
-                                                    string sortedWord = word;
-                                                    sort(sortedWord.begin(), sortedWord.end());
-                                                    auto entry = make_pair(sortedWord, word);
-                                                    signedDictionary.push_back(entry);
-                                                });
+for_each(dictionary.begin(), dictionary.end(), 
+         [&signedDictionary] (auto& word) 
+         {
+            string sortedWord = word;
+            sort(sortedWord.begin(), sortedWord.end());
+            auto entry = make_pair(sortedWord, word);
+            signedDictionary.push_back(entry);
+         });
 {% endhighlight %}
 
 Here I use a standard templated library ```pair``` to store the signature and the word itself. The pairs are then put into a dictionary called ```signedDictionary```. 
@@ -97,17 +98,18 @@ Finally, we output our results. I want all words that are anagrams to be on the 
 ofstream outputFile("output.txt");
 string prevSign;
 int lineNumber = 0;
-for_each(signedDictionary.begin(), signedDictionary.end(), [&outputFile, &prevSign, &lineNumber] (auto& entry)
-{
-    if (entry.first != prevSign && lineNumber > 0)
-    {
-        outputFile << '\n';
-    }
-    // print out current word
-    prevSign = entry.first;
-    ++lineNumber;
-    outputFile << entry.second << " ";
-});
+for_each(signedDictionary.begin(), signedDictionary.end(), 
+         [&outputFile, &prevSign, &lineNumber] (auto& entry)
+         {
+            if (entry.first != prevSign && lineNumber > 0)
+            {
+                outputFile << '\n';
+            }
+            // print out current word
+            prevSign = entry.first;
+            ++lineNumber;
+            outputFile << entry.second << " ";
+         });
 outputFile.close();
 {% endhighlight %}
 
