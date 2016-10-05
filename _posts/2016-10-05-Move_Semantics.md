@@ -152,6 +152,7 @@ Move semantic can be used in many other different ways though, for example ```un
 And that is the gist of Move Semantic.
 
 Edit: [here](http://pastebin.com/kU4Qiu7Q) is the reference implementation of operator+. 
+Edit2: For you hardcore C++ people out there, [this](http://stackoverflow.com/a/11540204) is a deep dive into what Move is, the reasoning behind it as well as technical and standard details.
 
 Cheers,
 Thai
