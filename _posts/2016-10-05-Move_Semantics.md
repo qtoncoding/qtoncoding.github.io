@@ -14,7 +14,7 @@ A couple of weeks ago, I had the opportunity to talk with potential Microsoft in
 Unfortunately, the student couldn't show much aside from some syntactic sugar that comes with C++11. And he was oblivious to "Move Semantic", the most important part of C++11.
 
 <h3>So, what is move semantic?</h3>
-To understand move semantic, there are a few concepts that need to be understood. Those are lvalue, rvalue and rvalue reference.
+To understand move semantic, there are a few concepts that need to be understood. Those are lvalue and rvalue.
 Let's start with ```lvalue```.
 Let's say we have this code:
 
@@ -150,6 +150,8 @@ This behavior makes codes that pass big objects containing heap allocated data a
 Move semantic can be used in many other different ways though, for example ```unique_ptr```.
 
 And that is the gist of Move Semantic.
+
+Edit: [here](http://pastebin.com/kU4Qiu7Q) is the reference implementation of operator+. 
 
 Cheers,
 Thai
