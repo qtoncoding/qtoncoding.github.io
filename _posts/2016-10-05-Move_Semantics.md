@@ -120,9 +120,9 @@ int main()
 }
 {% endhighlight %}
 
-Pop quiz: How many times the copy constructors were called for the line ```myString combined(first + second);```? And in turn, how many times do we allocate the string "first string second string "?
+Pop quiz: How many times was the copy constructor called for the line ```myString combined(first + second);```? And in turn, how many times did we allocate the string "first string second string "?
 
-Answer: The copy constructor is called once, and we allocate the string twice, once in the constructor for the temporary object resulted from operator+, and once in the copy constructor that copies the temporary object to ```combined```. Right after the copy, the temporary object is destroyed, and it's copy of the string is deallocated.
+Answer: The copy constructor was called once, and we allocated the string twice, once in the constructor for the temporary object resulted from operator+, and once in the copy constructor that copies the temporary object to ```combined```. Right after the copy, the temporary object was destroyed, and it's copy of the string was deallocated.
 
 We can see that there is an allocation of the string just for the purpose of copying it to another allocation and get destroyed right after. If this isn't just a string, but an expensive resource, it is really inefficient.
 What if we can just steal the allocated string inside the temporary object? After all, it's an ```rvalue```, no one will have a problem with it's content being modified or stolen.
