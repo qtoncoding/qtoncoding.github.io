@@ -1,4 +1,4 @@
----
+--
 layout: post
 title: "Operating System From Scratch. Part 3: First Boot Sector"
 description: "Write a boot sector that prints a character on the screen."
@@ -22,7 +22,7 @@ Let’s create a .asm file, call it boot\_sect.asm and fill it with the followin
 
 ; Pad the remaining bytes in this sector with 0
 
-times 510 - (\$-\$\$) db 0
+times 510 - ($-$$) db 0
 
 ; magic number for BIOS to recognize us as a boot sector
 
