@@ -5,7 +5,6 @@ description: "The tools we'll be using in this project"
 category: cplusplus
 tags: [C++, C, GCC, QEmu, NASM, WSL, Linux, VS]
 ---
-
 My development environment
 ==========================
 
