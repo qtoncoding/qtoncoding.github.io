@@ -29,14 +29,14 @@ The first thing we need to concern ourselves with is the overall process that
 happens when the computer is powered up. This will be the roadmap for us to
 follow. Generally, the process is as below:
 
-1.  Computer is powered on performs **P**owered-**O**n-**S**elf-**T**est (POST).
+1.  Computer is powered on performs **P**owered-**O**n-**S**elf-**T**est ([POST](https://en.wikipedia.org/wiki/Power-on_self-test)).
     If this process is successful, usually you’ll hear a \*beep\*, but laptops
     don’t usually do this anymore, so unless you have a desktop PC, you won’t
     hear it. (On the other hand, if anything bad happens during this test,
     you’ll hear several \*beep\*s and if you’re on a desktop PC, there will be
     an array of light on the mainboard to tell you what went wrong)
 
-2.  BIOS is loaded and initializes the CPU and some basic I/O like keyboard and
+2.  [BIOS](https://en.wikipedia.org/wiki/BIOS) is loaded and initializes the CPU and some basic I/O like keyboard and
     monitor. (Remember the blue screen that you get when you furiously hammer
     that Delete or F12 button when your computer starts up? Nowadays computers
     use UEFI, which provides many more functionalities like graphics, mouse even
