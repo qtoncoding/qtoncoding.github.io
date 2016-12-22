@@ -1,10 +1,11 @@
----
+ ---
 layout: post
 title: "Operating System From Scratch. Part 2: Development Environment"
 description: "The tools we'll be using in this project"
 category: cplusplus
 tags: [C++, C, GCC, QEmu, NASM, WSL, Linux, VS]
 ---
+
 My development environment
 ==========================
 
@@ -25,7 +26,7 @@ The first step is to install Bash on Windows. The installation process and be
 found [here on MSDN](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide). Alternatively, you can do this on MinGW, or just straight up Linux.
 
 Next up is to get NASM, which, from Bash, can be installed with just
-\`\`\`apt-get install NASM\`\`\`. If you want to do this purely on Windows, it
+```apt-get install NASM```. If you want to do this purely on Windows, it
 is also available [here](http://www.nasm.us/pub/nasm/releasebuilds/?C=M;O=D). You’ll need to add NASM to the PATH system variable to
 use it from the command line, though.
 
@@ -40,8 +41,8 @@ difficult and time consuming. For this we’ll use GCC. Normally you’ll need t
 modify GCC to be a cross compiler (which I think we’ll eventually have to do),
 but since we’ll be targeting the 32-bit x86 architecture (specifically i386), if
 you are on a 64-bit machine, you can just add a parameter to tell GCC to emit
-32-bit code. GCC can be installed by \`\`\`apt-get install
-build-essential\`\`\`. This will include several other tools we’ll use later on
+32-bit code. GCC can be installed by ```apt-get install
+build-essential```. This will include several other tools we’ll use later on
 (Make).
 
 Finally, install your favorite code editor, be it Vim, Emacs or Sublime.
