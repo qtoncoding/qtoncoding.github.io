@@ -1,7 +1,9 @@
+
 ---
 layout: post
 title: "Operating System From Scratch. Part 1: Introduction"
 description: "The journey to learn how to make an OS starts!"
+category: operatingsystem
 tags: [assembly, C, C++, OS]
 ---
 
