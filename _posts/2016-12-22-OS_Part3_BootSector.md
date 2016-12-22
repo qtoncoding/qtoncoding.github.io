@@ -5,6 +5,7 @@ description: "Write a boot sector that prints a character on the screen."
 category: cplusplus
 tags: [C++, C, GCC, QEmu, NASM, WSL, Linux, VS]
 ---
+
 BIOS and boot sector
 ====================
 
