@@ -1,4 +1,4 @@
- ---
+---
 layout: post
 title: "Operating System From Scratch. Part 2: Development Environment"
 description: "The tools we'll be using in this project"
