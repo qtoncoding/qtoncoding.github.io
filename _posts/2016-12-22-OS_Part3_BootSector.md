@@ -1,4 +1,4 @@
---
+---
 layout: post
 title: "Operating System From Scratch. Part 3: First Boot Sector"
 description: "Write a boot sector that prints a character on the screen."
