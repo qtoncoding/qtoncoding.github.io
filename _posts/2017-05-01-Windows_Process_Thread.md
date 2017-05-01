@@ -38,7 +38,7 @@ that the main tab is the “Processes” tab, and this seems to display the prog
 running on your computer. You can usually think of a process as a program
 running, except for some special cases (multiple processes for a software, or a
 process hosting multiple “program”). On a deeper level, a process contains a
-virtual address space, executable code, a handle table (containing information
+virtual address space with executable code, a handle table (containing information
 about which system resource the process is using) and statistics about the
 process. A process contains one or more threads, but cannot be empty. The first
 thread in a process is called a *primary thread.*
